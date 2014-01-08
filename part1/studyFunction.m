@@ -13,9 +13,11 @@ function studyFunction(func, numberOfSamples, a, b, plotPhase)
 	samples = sample(func, numberOfSamples, a, b);
 	T = a:period:(b-period);
 	
-	% Plot sampled version of the function
 	figure(1);
 	clf;
+	
+	% Plot sampled version of the function
+	subplot(2, 2, 1);
 	hold on;
 	plot(T, real(samples), '.b');
 	plot(T, imag(samples), '.m');
@@ -25,30 +27,28 @@ function studyFunction(func, numberOfSamples, a, b, plotPhase)
 	transformed = tfour(samples');
 	if plotPhase
 		% Plot amplitude and phase
-		figure(2);
-		clf;
+		subplot(2, 2, 2);
 		plot(F, abs(transformed), '.r');
 		title('Amplitude');
-		figure(3);
-		clf;
+		
+		subplot(2, 2, 4);
 		plot(F, angle(transformed), '.g');
 		title('Phase');
 	else
 		% Plot real and imaginary parts
-		figure(2);
-		clf;
+		subplot(2, 2, 2);
 		plot(F, real(transformed), '.r');
 		title('Real part');
-		figure(3);
-		clf;
+		
+		subplot(2, 2, 4);
 		plot(F, imag(transformed), '.g');
 		title('Imaginary part');
 	end
 	
 	% Plot the signal synthesized from the samples
 	synthesized = tfourinv(transformed);
-	figure(4);
-	clf;
+	
+	subplot(2, 2, 3);
 	hold on;
 	plot(T, real(synthesized), '.c');
 	plot(T, imag(synthesized), '.y');
