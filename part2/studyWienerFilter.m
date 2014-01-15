@@ -22,7 +22,7 @@ pause;
 %%
 disp(' ');
 disp('Creating degrading filter impulse response');
-impulseResponse = generateDegradingImpulseResponse(input, 3, 17);
+impulseResponse = generateDegradingImpulseResponse(input, 3, 19);
 displayImageWithSpectrum(impulseResponse);
 pause;
 
@@ -38,7 +38,6 @@ disp(' ');
 disp('Applying simplistic restoration filter');
 simplyFixed = applyInverseFilter(input, impulseResponse);
 displayImageWithSpectrum(simplyFixed);
-pause;
 
 %%
 % TODO: apply another kind of filter
