@@ -36,8 +36,29 @@ pause;
 %%
 disp(' ');
 disp('Applying simplistic restoration filter');
-simplyFixed = applyInverseFilter(input, impulseResponse);
+simplyFixed = applyFilter(input, impulseResponse, true);
 displayImageWithSpectrum(simplyFixed);
+pause;
 
 %%
-% TODO: apply another kind of filter
+disp(' ');
+disp('Applying square impulse-response filter to the restorated image');
+squareImpulseResponse = generateDegradingImpulseResponse(input, 3, 3);
+blurred = applyFilter(input, squareImpulseResponse);
+displayImageWithSpectrum(blurred);
+pause;
+
+%%
+disp(' ');
+disp('Applying larger square impulse-response filter to the restorated image');
+squareImpulseResponse = generateDegradingImpulseResponse(input, 10, 10);
+blurred = applyFilter(input, squareImpulseResponse);
+displayImageWithSpectrum(blurred);
+pause;
+
+%%
+disp(' ');
+disp('Applying very large square impulse-response filter to the restorated image');
+squareImpulseResponse = generateDegradingImpulseResponse(input, 25, 25);
+blurred = applyFilter(input, squareImpulseResponse);
+displayImageWithSpectrum(blurred);
