@@ -4,17 +4,17 @@ function output = applyWienerFilter(input, reference, degradationImpulseResponse
     reference = double(reference);
     
     % Compute degradation filter transfer function
-    degradationTransferFunction = fftshift(fft2(degradationImpulseResponse));
+    degradationTransferFunction = fft2(degradationImpulseResponse);
     
     % Compute noise power spectrum from reference image
-    Dr = fftshift(fft2(reference)) .* degradationTransferFunction;
-    dr = ifft2(fftshift(Dr));
+    Dr = fft2(reference) .* degradationTransferFunction;
+    dr = ifft2(Dr);
     dq = round(dr);
     noise = dq - dr;
-    noisePowerSpectrum = abs(fftshift(fft2(noise)));
+    noisePowerSpectrum = abs(fft2(noise)) .^ 2;
     
     % Compute reference image power spectrum
-    referencePowerSpectrum = abs(fftshift(fft2(reference)));
+    referencePowerSpectrum = abs(fft2(reference)) .^ 2;
     
     % Compute Wiener filter transfer function
     HSquared = abs(degradationTransferFunction) .^ 2;
@@ -23,6 +23,6 @@ function output = applyWienerFilter(input, reference, degradationImpulseResponse
                            .* ( HSquared ./ ( HSquared + noiseOverRef ) );
     
     % Apply Wiener filter
-    output = ifft2( fftshift(fft2(input)) .* wienerTransferFunction );
+    output = ifft2( fft2(input) .* wienerTransferFunction );
     output = real(fftshift(output));
 end
